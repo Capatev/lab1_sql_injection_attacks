@@ -15,6 +15,7 @@ public class Crud {
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
 
+
     // SQL queries as constants
     private static final String SELECT_ALL_USERS = "SELECT * FROM user_data";
 

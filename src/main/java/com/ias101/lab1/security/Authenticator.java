@@ -18,6 +18,7 @@ public class Authenticator {
      * @throws RuntimeException if there is a SQL error during authentication
      */
 
+
     public static boolean authenticateUser(String username, String password) {
 
         username = sanitize(username);
