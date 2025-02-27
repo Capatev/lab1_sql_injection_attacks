@@ -54,6 +54,8 @@ public class Crud {
         ResultSet rs = null;
         User user = null;
 
+        username = sanitize(username);
+
         try (var connection = DBUtil.connect(DB_URL, DB_USER, DB_PASSWORD);
              Statement stmt = connection.createStatement()) {
 
@@ -76,6 +78,8 @@ public class Crud {
      * @throws RuntimeException if there is an error deleting the user
      */
     public static void deleteUserByUsername(String username) {
+        username = sanitize(username);
+
         try (var connection = DBUtil.connect(DB_URL, DB_USER, DB_PASSWORD);
              Statement stmt = connection.createStatement()) {
 
@@ -99,5 +103,13 @@ public class Crud {
                 rs.getString("username"),
                 rs.getString("password")
         );
+    }
+
+    private static String sanitize(String input) {
+        if (input == null) {
+            return "";
+        }
+
+        return input.replace("'", "''").replaceAll("[a-zA-z-09_]", "");
     }
 }

@@ -17,7 +17,12 @@ public class Authenticator {
      * @return boolean Returns true if authentication successful, false otherwise
      * @throws RuntimeException if there is a SQL error during authentication
      */
+
     public static boolean authenticateUser(String username, String password) {
+
+        username = sanitize(username);
+        password = sanitize(password);
+
         try(var conn = DBUtil.connect("jdbc:sqlite:src/main/resources/database/sample.db",
                 "root","root")) {
             try(var statement = conn.createStatement()) {
@@ -33,5 +38,13 @@ public class Authenticator {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static String sanitize(String input) {
+        if (input == null) {
+            return "";
+        }
+
+        return input.replace("'", "''");
     }
 }
